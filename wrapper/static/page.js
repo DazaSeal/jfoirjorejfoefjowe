@@ -85,6 +85,12 @@ router.get("/cc", (req, res) => { // character creator
 		allowScriptAccess: "always",
 		movie: process.env.SWF_URL + "/cc.swf", // 'http://localhost/cc.swf'
 	};
+	html = `
+		<script>
+			function characterSaved() {
+				$(window).attr("location", "/");
+			}
+		</script>`
 	htmlString(req, res)
 });
 router.get("/cc_browser", (req, res) => { // character browser
@@ -152,7 +158,7 @@ router.get("/go_full", (req, res) => { // video editor
 			goteam_draft_only: 1,
 			isWide: 1,
 			collab: 0,
-			nextUrl: "/html/list.html",
+			nextUrl: "/",
 		},
 		allowScriptAccess: "always",
 	};

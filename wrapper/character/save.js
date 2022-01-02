@@ -1,37 +1,26 @@
-const loadPost = require("../misc/post_body");
+/***
+this file saves a character
+***/
+
+const express = require("express");
+const router = express.Router();
 const character = require("./main");
-const http = require("http");
 
-/**
- * @param {http.IncomingMessage} req
- * @param {http.ServerResponse} res
- * @param {import("url").UrlWithParsedQuery} url
- * @returns {boolean}
- */
-module.exports = function (req, res, url) {
-	if (req.method == "POST")
-		switch (url.pathname) {
-			case "/goapi/saveCCCharacter/":
-				loadPost(req, res).then(([data]) =>
-					character
-						.save(Buffer.from(data.body))
-						.then((id) => {
-							var thumb = Buffer.from(data.thumbdata, "base64");
-							character.saveThumb(thumb, id);
-							res.end(`0${id}`);
-						})
-						.catch(() => res.end(`10`))
-				);
-				return true;
+router.post("/goapi/saveCCCharacter/", (req, res) => {
+	character.save(Buffer.from(req.body.body))
+		.then((id) => {
+			var thumb = Buffer.from(req.body.thumbdata, "base64");
+			character.saveThumb(thumb, id);
+			res.send(`0${id}`);
+		})
+		.catch(() => res.send(`10`))
+});
 
-			case "/goapi/saveCCThumbs/":
-				loadPost(req, res).then(([data]) => {
-					var id = data.assetId;
-					var thumb = Buffer.from(data.thumbdata, "base64");
-					character.saveThumb(thumb, id);
-					res.end(`0${id}`);
-				});
-				return true;
-		}
-	return;
-};
+router.post("/goapi/saveCCThumbs/", (req, res) => {
+	var id = req.body.assetId;
+	var thumb = Buffer.from(req.body.thumbdata, "base64");
+	character.saveThumb(thumb, id);
+	res.end(`0${id}`);
+});
+
+module.exports = router;

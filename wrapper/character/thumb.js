@@ -1,13 +1,13 @@
 /***
-this file loads movie thumbnails
+this file loads character thumbnails
 ***/
 
 const express = require("express");
 const router = express.Router();
-const movie = require("./main");
+const character = require("./main");
 
-router.get("/movie_thumbs/:movieId.png", (req, res) => {
-	movie.loadThumb(req.params.movieId)
+router.get("/char_thumbs/:charId.png", (req, res) => {
+	character.loadThumb(req.params.charId)
 		.then((img) => {
 			res.set("Content-Type", "image/png");
 			res.statusCode = 200;

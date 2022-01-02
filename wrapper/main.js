@@ -11,21 +11,32 @@ stuff
 **/
 const express = require("express");
 const app = express();
-const reqBody = require('body-parser');
-const stuff = require('./static/info');
+const reqBody = require("body-parser");
+const morgan = require("morgan");
+const stuff = require("./static/info");
 
 app.use(reqBody.json());
 app.use(reqBody.urlencoded({ extended: true }));
-app.use("/", require("./asset/list"));
+// HTTP logging
+app.use(morgan("tiny"));
+app.use(require("./asset/list"));
+// character
+app.use(require("./character/load"));
 app.use(require("./character/premade"));
-app.use("/", require("./movie/list"));
-app.use("/", require("./movie/load"));
-app.use("/", require("./movie/thumb"));
-app.use("/", require("./static/page"));
-app.use("/", require("./theme/list"));
-app.use("/", require("./theme/load"));
-app.use(express.static("public", { fallthrough: true })); // static files
-app.all("*", (req, res) => { // info.json links
+app.use(require("./character/redirect"));
+app.use(require("./character/save"));
+app.use(require("./character/thumb"));
+app.use(require("./movie/list"));
+app.use(require("./movie/load"));
+app.use(require("./movie/thumb"));
+app.use(require("./static/page"));
+// theme
+app.use(require("./theme/list"));
+app.use(require("./theme/load"));
+ // static files
+app.use(express.static("public", { fallthrough: true }));
+// info.json links
+app.all("*", (req, res) => {
 	const methodLinks = stuff[req.method];
 	for (let linkIndex in methodLinks) {
 		var regex = new RegExp(linkIndex);

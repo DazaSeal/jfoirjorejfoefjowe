@@ -4542,7 +4542,10 @@
 	<char id="400001007" name="2Epik4u (Beta Tester & Supporter)" cc_theme_id="family" thumbnail_url="char-default.png" copyable="Y">
 		<tags>family,_free,_cat:The Credits</tags>
 	</char>
-	<char id="400001013" name="GoTest334 (Beta Tester)" cc_theme_id="family" thumbnail_url="char-default.png" copyable="Y">
+	<char id="400001013" name="GoTest334 (Wrapper: Offline Project Lead)" cc_theme_id="family" thumbnail_url="char-default.png" copyable="Y">
+		<tags>family,_free,_cat:The Credits</tags>
+	</char>
+	<char id="400001035" name="octanuary (Creator of Untitled project)" cc_theme_id="family" thumbnail_url="char-default.png" copyable="Y">
 		<tags>family,_free,_cat:The Credits</tags>
 	</char>
 

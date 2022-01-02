@@ -65,8 +65,5 @@
 			},
 			"content": "1"
 		}
-	},
-	"pages": {
-		"/cc": "<script>function characterSaved(){window.location.reload()}</script>"
 	}
 }

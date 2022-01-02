@@ -1,35 +1,26 @@
-const http = require("http");
+/***
+this file redirects legacy character links
+***/
+
+const express = require("express");
+const router = express.Router();
 const defaultTypes = {
 	family: "adam",
 	anime: "guy",
 };
 
-/**
- * @param {http.IncomingMessage} req
- * @param {http.ServerResponse} res
- * @param {import("url").UrlWithParsedQuery} url
- * @returns {boolean}
- */
-module.exports = function (req, res, url) {
-	if (req.method != "GET" || !url.pathname.startsWith("/go/character_creator")) return;
-	var match = /\/go\/character_creator\/(\w+)(\/\w+)?(\/.+)?$/.exec(url.pathname);
-	if (!match) return;
-	[, theme, mode, id] = match;
+// new char
+router.get("/go/character_creator/:themeId/new_char", (req, res) => {
+	var type = req.query.type || defaultTypes[req.params.themeId] || "";
+	redirect = `/cc?themeId=${req.params.themeId}&bs=${type}`;
+	res.set("Location", redirect);
+	res.status(302).send();
+});
+// copy char
+router.get("/go/character_creator/:themeId/copy/:charId", (req, res) => {
+	redirect = `/cc?themeId=${req.params.themeId}&original_asset_id=${req.params.charId}`;	
+	res.set("Location", redirect);
+	res.status(302).send();
+});
 
-	var redirect;
-	switch (mode) {
-		case "/copy": {
-			redirect = `/cc?themeId=${theme}&original_asset_id=${id.substr(1)}`;
-			break;
-		}
-		default: {
-			var type = url.query.type || defaultTypes[theme] || "";
-			redirect = `/cc?themeId=${theme}&bs=${type}`;
-			break;
-		}
-	}
-	res.setHeader("Location", redirect);
-	res.statusCode = 302;
-	res.end();
-	return true;
-};
+module.exports = router;
