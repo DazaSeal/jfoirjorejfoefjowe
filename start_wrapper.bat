@@ -83,7 +83,7 @@ if not exist "utilities\checks\disclaimer.txt" (
 
 :: Welcome, Director Ford!
 echo Wrapper: Offline
-echo A project from VisualPlugin adapted by the W:O team
+echo A project from VisualPlugin adapted by Octanuary and the W:O team
 echo Version !WRAPPER_VER!
 echo:
 
@@ -558,7 +558,7 @@ cls
 
 echo:
 echo Wrapper: Offline v!WRAPPER_VER! running
-echo A project from VisualPlugin adapted by the W:O team
+echo A project from VisualPlugin adapted by Octanuary and the W:O team
 echo:
 if !VERBOSEWRAPPER!==n ( echo DON'T CLOSE THIS WINDOW^^! Use the quit option ^(0^) when you're done. )
 if !VERBOSEWRAPPER!==y ( echo Verbose mode is on, see the two extra CMD windows for extra output. )
@@ -567,8 +567,8 @@ if !JUSTIMPORTED!==y ( echo Note: You'll need to reload the editor for your file
 :: Hello, code wanderer. Enjoy seeing all the secret options easily instead of finding them yourself.
 echo:
 echo Enter 1 to reopen the video list
-echo Enter 2 to import a file
 echo Enter ? to open the FAQ
+echo Enter set to change a setting
 echo Enter clr to clean up the screen
 echo Enter 0 to close Wrapper: Offline
 set /a _rand=(!RANDOM!*67/32768)+1
@@ -579,8 +579,8 @@ set /p CHOICE=Choice:
 if "!choice!"=="0" goto exitwrapperconfirm
 set FUCKOFF=n
 if "!choice!"=="1" goto reopen_webpage
-if "!choice!"=="2" goto start_importer
 if "!choice!"=="?" goto open_faq
+if /i "!choice!"=="set" goto open_settings
 if /i "!choice!"=="clr" goto wrapperstartedcls
 if /i "!choice!"=="cls" goto wrapperstartedcls
 if /i "!choice!"=="clear" goto wrapperstartedcls
@@ -598,6 +598,7 @@ if /i "!choice!"=="browser slayer" goto slayerstestaments
 if /i "!choice!"=="patch" goto patchtime
 if /i "!choice!"=="random" goto sayarandom
 if /i "!choice!"=="spark" echo WHY DID SOMEONE FUCK UP THE LAUNCHER? & goto wrapperidle
+if /i "!choice!"=="octanuary" echo HE'S EVIL^^! & goto wrapperidle
 :: dev options
 if /i "!choice!"=="amnesia" goto wipe_save
 if /i "!choice!"=="restart" goto restart
@@ -650,6 +651,11 @@ echo Opening the FAQ...
 start notepad.exe FAQ.txt
 goto wrapperidle
 
+:open_settings
+echo Opening the settings...
+start settings.bat
+goto wrapperidle
+
 :wipe_save
 call utilities\reset_install.bat
 if !errorlevel! equ 1 goto wrapperidle
@@ -658,6 +664,7 @@ if !errorlevel! equ 1 goto wrapperidle
 :restart
 TASKKILL /IM node.exe /F
 start "" /wait /B "%~F0" point_insertion
+call utilities\config.bat
 exit
 
 :w_a_t_c_h
@@ -683,7 +690,7 @@ echo yes or no question here && goto patchtimeretry
 
 :sayarandom
 :: welcome to "inside jokes with no context" land
-set /a _rand=!RANDOM!*16/32767
+set /a _rand=!RANDOM!*17/32767
 if !_rand!==0 echo stress level ^>0
 if !_rand!==1 echo Something random.
 if !_rand!==2 echo oisjdoiajfgmafvdsdg

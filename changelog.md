@@ -4,20 +4,16 @@ This changelog is based off [Keep a Changelog](https://keepachangelog.com) and ~
 
 ## Version 1.3.0 - 2022-00-00 - let's just forget about 2021
 ### What do I care about
-Put some shit here.
+TODO: Put some shit here.
 ### Added
   - Upgraded Wrapper base to v1.2.7½
   - Preview window in the video maker
   - jQuery for JS stuff
 ### Changed
-  - Switched to Express for http stuff
-  - Replaced VFProxy, things should hopefully be running fine
+  - Switched to Express for HTTP stuff
+  - Replaced VFProxy, VoiceForge should hopefully be running fine
 ### Fixed
   - Starters are now working
-  - 
-  - 
-  - 
-  - 
 
 ## Version 1.2.3 - 2021-03-06 - i am HUNGRY FOR UPDATES!!!
 ### Added

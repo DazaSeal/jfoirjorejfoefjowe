@@ -19,7 +19,7 @@ body {
 main {
 	padding: 20px 40px;
 }
-.dark {
+html.dark, html.dark body {
 	background: #101010;
 	color: #ccc;
 }

@@ -1,5 +1,5 @@
 # Wrapper: Offline
-Wrapper: Offline is a GoAnimate Server Emulator carrying on the torch of [VisualPlugin's GoAnimate Wrapper project](https://github.com/GoAnimate-Wrapper) after it's shutdown in 2020. Unlike the original project, Offline can not be shut down by Vyond. Why? It's because of our twist on the GoAnimate Wrapper formula! Everything is hosted and programmed to function locally, no internet access required, barring the initial download (and TTS at this time). This project is important for archival purposes, as the ability to use this legacy editor and themes would be far trickier without it. Besides the main feature of Offline, we have also added other additional features and improvements compared to the original GoAnimate Wrapper project, and there will be more to come, as Offline will continue to get additional updates in the future.
+Wrapper: Offline is a project carrying on the torch of [VisualPlugin's Wrapper project](https://github.com/GoAnimate-Wrapper) after it's shutdown in 2020. Unlike the original project, Offline can not be shut down by Vyond. Why? It's because of our twist on the Wrapper formula! Everything is hosted and programmed to function locally, no internet access required, barring the initial download (and TTS at this time). This project is important for archival purposes, as the ability to use this legacy editor and themes would be far trickier without it. Besides the main feature of Offline, we have also added other additional features and improvements compared to the original Wrapper project, and there will be more to come, as Offline will continue to get additional updates in the future.
 
 ## Running / Installation
 To start Offline on Windows, open start_wrapper.bat. It'll automate just about everything for you and, well, start Wrapper: Offline. On your first run, you will likely need to right-click it and click "Run as Administrator". This allows it to properly install what it needs to run. After your initial run, you shouldn't need to do that again, you can start it as normal.
@@ -18,7 +18,6 @@ This includes:
   - Files in the "wrapper" folder
   - Batch files made for Wrapper: Offline
   - Node.js
-  - http-server
   - SilentCMD
   - Chromium Web Store
 
@@ -41,24 +40,29 @@ Original Wrapper credits:
 | CLarramore   | Bug fixes            |
 | PoleyMagik   | Asset Store Archive  |
 
-No members of the original team are officially working on Offline, even if they have contributed. Some members of the original team have asked to not be given credit, and they have been removed.
-
-Project Lead will have (PL) on their name and developers will have (D) on their name, to show they are officially working on Wrapper: Offline. Everyone else has simply contributed something at some point, or left the development team.
-Wrapper: Offline credits:
+Original Wrapper: Offline credits:
 | Name             | Contribution                                           |
-| ---------------- | -------------------------------------------------------|
-| GoTest334 (PL)   | Current Project Lead                                   |
-| Benson (D)       | Wrapper: Offline                                       |
+| ---------------- | ------------------------------------------------------ |
+| GoTest334        | Current project lead                                   |
+| Benson           | Creator of Wrapper: Offline                            |
 | NathanSaturnBOI  | Logo                                                   |
-| Blukas/GoTube (D)| Import idea, Mega Comedy World 2                       |
+| Blukas/GoTube    | Import idea, Mega Comedy World 2                       |
 | VisualPlugin     | Text to speech voices                                  |
 | xomdjl_          | VFProxy, Text to speech voices                         |
 | creepyjokes2000  | Waveform fix, improved actions                         |
 | JoshAnimate      | Headgear fix                                           |
 | RegularSpark     | Fixing 1.2.3 to actually work, truncated themelist     |
 | KrisAnimate      | Chromium parameter                                     |
-| octanuary        | Unofficial 1.3.0                                       |
 | PoleyMagik       | Client Modifications                                   |
+
+No members of the original teams are officially working on Offline, even if they have contributed. Some members of the original teams have asked to not be given credit, and they have been removed.
+
+Project Lead will have (PL) on their name and developers will have (D) on their name, to show they are officially working on W:O. Everyone else has simply contributed something at some point, or left the development team.
+Wrapper: Offline credits:
+| Name          | Contribution                      |
+| ------------- | --------------------------------- |
+| Octanuary     | Unnamed Project                   |
+
 
 These are unaffiliated people that they haven't directly done anything for the project (and probably don't even know it exists) but still deserve credit for their things. Kinda like a shoutout but in a project's readme. ***Please do not contact them about Wrapper: Offline.***
 | Name               | Contribution                     |

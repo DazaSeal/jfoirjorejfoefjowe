@@ -8,6 +8,8 @@
 	<link rel="stylesheet" type="text/css" href="./pages/css/modern-normalize.css" />
 	<link rel="stylesheet" type="text/css" href="./pages/css/global.css" />
 	<link rel="stylesheet" type="text/css" href="./pages/css/list.css" />
+	<script src="./pages/js/jquery.js"></script>
+	<script src="./pages/js/global.js"></script>
 </head>
 <body>
 
@@ -90,6 +92,7 @@
 
 <footer>
 	<nav id="foot-left">
+		<a href="./settings.html">Settings</a>
 		<a href="./faq.html">FAQ</a>
 		<a href="https://discord.gg/yhGAetN">W:O Discord</a>
 	</nav>
@@ -141,7 +144,7 @@
 	function deleteMovie(id) {
 		var deleteConfirm = confirm("Are you sure you want to delete this movie?");
 		if(deleteConfirm) fetch(`/deleteMovie/${id}`).then(() => document.getElementById(id).remove());
-	}	
+	}
 </script>
 
 </html>

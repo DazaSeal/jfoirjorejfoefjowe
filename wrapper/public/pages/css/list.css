@@ -81,13 +81,6 @@ tr>:nth-child(1)>img {
 }
 
 /**
-video title
-**/
-tr>:nth-child(2) {
-	color: #999;
-}
-
-/**
 date modified
 **/
 /* date modified container */
@@ -132,6 +125,9 @@ tr>:nth-child(4)>a {
 	/* layout */
 	display: inline-block;
 	padding-right: 10px;
+}
+.dark tr>:nth-child(4)>a {
+	color: #ccc;
 }
 tr>:nth-child(4)>a:hover {
 	color: #d85e27;
