@@ -18,7 +18,7 @@ const stuff = require("./static/info");
 app.use(reqBody.json());
 app.use(reqBody.urlencoded({ extended: true }));
 // HTTP logging
-app.use(morgan("tiny"));
+app.use(morgan("dev"));
 app.use(require("./asset/list"));
 // character
 app.use(require("./character/load"));
