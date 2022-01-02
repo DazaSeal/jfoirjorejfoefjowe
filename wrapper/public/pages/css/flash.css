@@ -1,0 +1,27 @@
+/**
+popups
+**/
+.popup_container {
+	background: #0008;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+}
+.popup { /* the popup itself */
+	/* style */
+	background: #eee;
+	color: #666;
+    border-radius: 8px;
+	/* layout */
+    position: absolute;
+	padding: 20px 40px;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.popup_head {
+	display: flex;
+	justify-content: space-between;
+}
+.popup_head *  { margin: 0 0 20px }
+.close-button { color: #50008c }

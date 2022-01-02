@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<link rel="icon" href="./favicon.ico" type="image/png" />
+	<title>Video List</title>
+	<meta name="description" content="Wrapper: Offline's Video List" />
+	<link rel="stylesheet" type="text/css" href="./pages/css/modern-normalize.css" />
+	<link rel="stylesheet" type="text/css" href="./pages/css/global.css" />
+	<link rel="stylesheet" type="text/css" href="./pages/css/list.css" />
+</head>
+<body>
+
+<header>
+	<a href="/"><h1 style="margin:0"><img id="logo" src="./pages/img/logo.svg" alt="Wrapper: Offline" /></h1></a>
+	<nav id="headbuttons">
+		<div class="dropdown_contain button_small">
+			<div class="dropdown_button upload_button">UPLOAD</div>
+			<nav class="dropdown_menu">
+				<a onclick="document.getElementById('file').click()">Movie</a>
+				<a onclick="document.getElementById('file2').click()">Character</a>
+			</nav>
+		</div>
+		<div class="dropdown_contain button_small">
+			<div class="dropdown_button">CREATE A CHARACTER</div>
+			<nav class="dropdown_menu">
+				<h2>Comedy World</h2>
+				<a href="/cc?themeId=family&bs=adam">Guy (Adam)</a>
+				<a href="/cc?themeId=family&bs=eve">Girl (Eve)</a>
+				<a href="/cc?themeId=family&bs=bob">Fat (Bob)</a>
+				<a href="/cc?themeId=family&bs=rocky">Buff (Rocky)</a>
+				<hr />
+				<h2>Anime</h2>
+				<a href="/cc?themeId=anime&bs=guy">Guy</a>
+				<a href="/cc?themeId=anime&bs=girl">Girl</a>
+				<a href="/cc?themeId=ninjaanime&bs=guy">Guy (Ninja)</a>
+				<a href="/cc?themeId=ninjaanime&bs=girl">Girl (Ninja)</a>
+				<hr />
+				<h2>Peepz</h2>
+				<a href="/cc?themeId=cc2&bs=default">Lil' Peepz</a>
+				<a href="/cc?themeId=chibi&bs=default">Chibi Peepz</a>
+				<a href="/cc?themeId=ninja&bs=default">Chibi Ninjas</a>
+				<hr />
+				<h2>Space Citizens</h2>
+				<a href="/cc?themeId=spacecitizen&bs=guy">Guy</a>
+				<a href="/cc?themeId=spacecitizen&bs=muscular_guy">Guy (Buff)</a>
+				<a href="/cc?themeId=spacecitizen&bs=girl">Girl</a>
+			</nav>
+		</div>
+		<div class="dropdown_contain button_small">
+			<div class="dropdown_button">BROWSE CHARACTERS</div>
+			<nav class="dropdown_menu">
+				<h2>Comedy World</h2>
+				<a href="/cc_browser?themeId=family">Comedy World</a>
+				<hr />
+				<h2>Anime</h2>
+				<a href="/cc_browser?themeId=anime">Anime</a>
+				<a href="/cc_browser?themeId=ninjaanime">Ninja Anime</a>
+				<hr />
+				<h2>Peepz</h2>
+				<a href="/cc_browser?themeId=cc2">Lil' Peepz</a>
+				<a href="/cc_browser?themeId=chibi">Chibi Peepz</a>
+				<a href="/cc_browser?themeId=ninja">Chibi Ninjas</a>
+				<hr />
+				<a href="/cc_browser?themeId=spacecitizen">Space Citizen</a>
+			</nav>
+		</div>
+		<a href="/go_full" class="button_big">MAKE A MOVIE</a>
+	</nav>
+</header>
+
+<main>
+	<table>
+		<thead>
+			<tr>
+				<td></td>
+				<td>Movie Title</td>
+				<td>Date Modified</td>
+				<td></td>
+			</tr>
+		</thead>
+		<tbody></tbody>
+		<tfoot>
+			<tr>
+				<td colspan="127"><a id="load_more" href="javascript:;">LOAD MORE...</a></td>
+			</tr>
+		</tfoot>
+	</table>
+</main>
+
+<footer>
+	<nav id="foot-left">
+		<a href="./faq.html">FAQ</a>
+		<a href="https://discord.gg/yhGAetN">W:O Discord</a>
+	</nav>
+
+	<nav id="foot-right">
+		<a href="./caillou.html">Caillou</a>
+	</nav>
+</footer>
+
+<form enctype='multipart/form-data' action='/upload_movie' method='post'>
+	<input id='file' type="file" onchange="this.form.submit()" name='import' />
+</form>
+
+<form enctype='multipart/form-data' action='/upload_character' method='post'>
+	<input id='file2' type="file" onchange="this.form.submit()" name='import' />
+</form>
+
+</body>
+
+<script>
+	// This loads the video list's content
+	var tbody = document.getElementsByTagName('tbody')[0];
+	var loadMore = document.getElementById('load_more');
+
+	var C = 0;
+	function loadRows(json) {
+		let c = C; C += 69;
+		for (; c < C; c++) {
+			if (c > json.length - 1) {
+				loadMore.remove();
+				break;
+			}
+
+			const tbl = json[c];
+			const date = tbl.date.substr(0, 10)
+			const id = tbl.id.substr(2, 9);
+			tbody.innerHTML += '<tr id="' + tbl.id + '"><td><img src="/movie_thumbs/' + tbl.id + '.png"></td><td><div>' + tbl.title.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + '</div><div>(#' + id + ') ' + tbl.durationString + '</div></div></div></td><td><span>' + date + '</span></td><td><a href="javascript:;" onclick="popup(\'' + tbl.id + '\')"></a><a href="/go_full?movieId=' + tbl.id + '"></a><a href="/movies/' + tbl.id + '.xml" download="' + tbl.title + '"></a><a href="javascript:;" onclick="deleteMovie(\'' + tbl.id + '\')"></a></td></tr>';
+		}
+	}
+
+	fetch('/api/getMovieList/').then((response) => {
+		response.json().then((data) => loadRows(data));
+	});
+
+	function popup(id) {
+		window.open('/player?movieId=' + id, 'MsgWindow', 'width=1280,height=723,left=' + (screen.width / 2 - 640) + ',top=' + (screen.height / 2 - 360));
+	}
+
+	function deleteMovie(id) {
+		var deleteConfirm = confirm("Are you sure you want to delete this movie?");
+		if(deleteConfirm) fetch(`/deleteMovie/${id}`).then(() => document.getElementById(id).remove());
+	}	
+</script>
+
+</html>
