@@ -1,22 +1,20 @@
-const loadPost = require("../misc/post_body");
+/***
+this file saves movies
+***/
+
+const express = require("express");
+const router = express.Router();
 const movie = require("./main");
-const http = require("http");
 
-/**
- * @param {http.IncomingMessage} req
- * @param {http.ServerResponse} res
- * @param {import("url").UrlWithParsedQuery} url
- * @returns {boolean}
- */
-module.exports = function (req, res, url) {
-	if (req.method != "POST" || url.path != "/goapi/saveMovie/") return;
-	loadPost(req, res).then(([data, mId]) => {
-		const trigAutosave = data.is_triggered_by_autosave;
-		if (trigAutosave && (!data.movieId || data.noAutosave)) return res.end("0");
+router.post("/goapi/saveMovie/", (req, res) => {
+	const trigAutosave = req.body.is_triggered_by_autosave;
+	if (trigAutosave && (!req.body.movieId || req.body.noAutosave)) return res.end("0");
 
-		var body = Buffer.from(data.body_zip, "base64");
-		var thumb = data.thumbnail_large && Buffer.from(data.thumbnail_large, "base64");
-		movie.save(body, thumb, mId, data.presaveId).then((nId) => res.end("0" + nId));
-	});
-	return true;
-};
+	var bodyZip = Buffer.from(req.body.body_zip, "base64");
+	var thumb = req.body.thumbnail_large && Buffer.from(req.body.thumbnail_large, "base64");
+	var movieId = req.body.movieId || req.body.presaveId;
+	movie.save(bodyZip, thumb, movieId, req.body.presaveId)
+		.then((nId) => res.end("0" + nId));
+});
+
+module.exports = router;

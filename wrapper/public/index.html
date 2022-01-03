@@ -64,7 +64,7 @@
 				<a href="/cc_browser?themeId=chibi">Chibi Peepz</a>
 				<a href="/cc_browser?themeId=ninja">Chibi Ninjas</a>
 				<hr />
-				<a href="/cc_browser?themeId=spacecitizen">Space Citizen</a>
+				<a href="/cc_browser?themeId=spacecitizen">Space Citizens</a>
 			</nav>
 		</div>
 		<a href="/go_full" class="button_big">MAKE A MOVIE</a>
@@ -102,11 +102,11 @@
 	</nav>
 </footer>
 
-<form enctype='multipart/form-data' action='/upload_movie' method='post'>
+<form enctype='multipart/form-data' action='/api/uploadMovie' method='post'>
 	<input id='file' type="file" onchange="this.form.submit()" name='import' />
 </form>
 
-<form enctype='multipart/form-data' action='/upload_character' method='post'>
+<form enctype='multipart/form-data' action='/api/uploadCharacter' method='post'>
 	<input id='file2' type="file" onchange="this.form.submit()" name='import' />
 </form>
 

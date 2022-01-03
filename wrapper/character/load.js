@@ -9,8 +9,8 @@ const character = require("./main");
 router.get("/characters/:charId.png", (req, res) => {
 	res.set("Content-Type", "text/xml");
 	character.load(req.params.charId)
-		.then((v) => res.status(200).send(v))
-		.catch((e) => res.status(404).send(e));
+		.then((v) => res.status(200).end(v))
+		.catch((e) => res.status(404).end(e));
 });
 router.post("/goapi/getCcCharCompositionXml/", (req, res) => {
 	res.set({"Content-Type": "text/html", "charset": "UTF-8"});

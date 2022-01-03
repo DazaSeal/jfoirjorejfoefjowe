@@ -14,6 +14,7 @@ TODO: Put some shit here.
   - Replaced VFProxy, VoiceForge should hopefully be running fine
 ### Fixed
   - Starters are now working
+  - Movie uploading only takes XML files
 
 ## Version 1.2.3 - 2021-03-06 - i am HUNGRY FOR UPDATES!!!
 ### Added

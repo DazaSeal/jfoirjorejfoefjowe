@@ -1,29 +1,21 @@
-const formidable = require("formidable");
+/***
+this file saves uploaded movies
+***/
+
+const express = require("express");
+const router = express.Router();
 const fUtil = require("../misc/file");
 const parse = require("./parse");
-const http = require("http");
-const fs = require("fs");
 
-/**
- * @param {http.IncomingMessage} req
- * @param {http.ServerResponse} res
- * @param {import("url").UrlWithParsedQuery} url
- * @returns {boolean}
- */
-module.exports = function (req, res, url) {
-	if (req.method != "POST" || url.path != "/upload_movie") return;
-	new formidable.IncomingForm().parse(req, (e, f, files) => {
-		if (!files.import) return;
-		var path = files.import.path;
-		var buffer = fs.readFileSync(path);
-		var numId = fUtil.getNextFileId("movie-", ".xml");
-		parse.unpackXml(buffer, `m-${numId}`);
-		fs.unlinkSync(path);
+router.post("/api/uploadMovie", (req, res) => {
+	if (req.files.import.mimetype !== "text/xml")
+		res.status(400).end();
+	var numId = fUtil.getNextFileId("movie-", ".xml");
+	parse.unpackXml(req.files.import.data, `m-${numId}`);
 
-		res.statusCode = 302;
-		var url = `/go_full?movieId=m-${numId}`;
-		res.setHeader("Location", url);
-		res.end();
-	});
-	return true;
-};
+	var url = `/go_full?movieId=m-${numId}`;
+	res.set("Location", url);
+	res.status(302).end();
+});
+
+module.exports = router;
