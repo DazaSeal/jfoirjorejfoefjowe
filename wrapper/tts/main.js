@@ -1,25 +1,25 @@
+/***
+this file has everything for tts
+***/
+
 const voices = require("./info").voices;
-const qs = require("querystring");
 const brotli = require("brotli");
-const https = require("https");
 const md5 = require("js-md5");
 const Lame = require("node-lame").Lame;
+// request stuff
+const https = require("https");
 const http = require("http");
-
-// Fallback option for compatibility between Wrapper and https://github.com/Windows81/Text2Speech-Haxxor-JS.
-let get;
-try {
-	get = require("../misc/get");
-} catch {
-	get = require("./get");
-}
+const get = require("../misc/get");
 
 module.exports = (voiceName, text) => {
 	return new Promise(async (res, rej) => {
+		// get voice
 		const voice = voices[voiceName];
+		if(!voice) // voice doesn't exist
+			rej;
+		// voice sources
 		switch (voice.source) {
 			case "polly": {
-				console.log("polly voice generating...");
 				var charsCount = text.length;
 				var req = https.request(
 					{
@@ -42,7 +42,6 @@ module.exports = (voiceName, text) => {
 						r.on("data", (b) => buffers.push(b));
 						r.on("end", () => {
 							var json = JSON.parse(Buffer.concat(buffers));
-							console.log(json);
 							if(json.success !== true)
 								rej;
 							get(`https://voicemaker.in/${json.path}`).then((response) => res(response)).catch(rej);
@@ -59,12 +58,12 @@ module.exports = (voiceName, text) => {
 			case "cepstral":
 			case "voiceforge": {
 				/* Special thanks to ItsCrazyScout for helping us find the new VoiceForge link! */
-				var q = qs.encode({
+				const q = new URLSearchParams({
 					"HTTP-X-API-KEY": "9a272b4",
 					"voice": voice.arg,
 					"msg": text,
 					"email": "null",
-				});
+				}).toString();
 				http.get(
 					{
 						host: "api.voiceforge.com",
@@ -89,7 +88,7 @@ module.exports = (voiceName, text) => {
 			case "vocalware": {
 				var [eid, lid, vid] = voice.arg;
 				var cs = md5(`${eid}${lid}${vid}${text}1mp35883747uetivb9tb8108wfj`);
-				var q = qs.encode({
+				const q = new URLSearchParams({
 					EID: voice.arg[0],
 					LID: voice.arg[1],
 					VID: voice.arg[2],
@@ -99,7 +98,7 @@ module.exports = (voiceName, text) => {
 					ACC: 5883747,
 					cache_flag: 3,
 					CS: cs,
-				});
+				}).toString();
 				var req = https.get(
 					{
 						host: "cache-a.oddcast.com",
@@ -167,7 +166,7 @@ module.exports = (voiceName, text) => {
 								}
 							);
 							req.end(
-								qs.encode({
+								new URLSearchParams({
 									req_voice: voice.arg,
 									cl_pwd: "",
 									cl_vers: "1-30",
@@ -178,15 +177,15 @@ module.exports = (voiceName, text) => {
 									cl_env: "ACAPELA_VOICES",
 									prot_vers: 2,
 									cl_app: "AcapelaGroup_WebDemo_Android",
-								})
+								}).toString()
 							);
 						});
 					}
 				);
 				req.end(
-					qs.encode({
+					new URLSearchParams({
 						json: `{"googleid":"${email}"`,
-					})
+					}).toString()
 				);
 				break;
 			}
@@ -234,13 +233,13 @@ module.exports = (voiceName, text) => {
 					}
 				);
 				req.end(
-					qs.encode({
+					new URLSearchParams({
 						but1: text,
 						butS: 0,
 						butP: 0,
 						butPauses: 0,
 						but: "Submit",
-					})
+					}).toString()
 				);
 				break;
 			}
