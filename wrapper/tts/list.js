@@ -1,5 +1,10 @@
+/***
+this file lists the tts voices
+***/
+
+const express = require("express");
+const router = express.Router();
 const info = require("./info");
-const http = require("http");
 const voices = info.voices,
 	langs = {};
 
@@ -7,7 +12,7 @@ Object.keys(voices).forEach((i) => {
 	const v = voices[i],
 		l = v.language;
 	langs[l] = langs[l] || [];
-	langs[l].push(`<voice id="${i}" desc="${v.desc}" sex="${v.gender}" demo-url="" country="${v.country}" plus="N"/>`);
+	langs[l].push(`<voice id="${i}" desc="${v.desc}" sex="${v.gender}" demo-url="" country="${v.country}" plus="N" />`);
 });
 
 const xml = `${process.env.XML_HEADER}<voices>${Object.keys(langs)
@@ -19,15 +24,9 @@ const xml = `${process.env.XML_HEADER}<voices>${Object.keys(langs)
 	})
 	.join("")}</voices>`;
 
-/**
- * @param {http.IncomingMessage} req
- * @param {http.ServerResponse} res
- * @param {import("url").UrlWithParsedQuery} url
- * @returns {boolean}
- */
-module.exports = function (req, res, url) {
-	if (req.method != "POST" || url.path != "/goapi/getTextToSpeechVoices/") return;
-	res.setHeader("Content-Type", "text/html; charset=UTF-8");
-	res.end(xml);
-	return true;
-};
+router.post("/goapi/getTextToSpeechVoices/", (req, res) => {
+	res.set({"Content-Type": "text/html", "charset": "UTF-8"});
+	res.status(200).end(xml)
+});
+
+module.exports = router;

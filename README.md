@@ -54,6 +54,7 @@ Original Wrapper: Offline credits:
 | RegularSpark     | Fixing 1.2.3 to actually work, truncated themelist     |
 | KrisAnimate      | Chromium parameter                                     |
 | PoleyMagik       | Client Modifications                                   |
+| ItsCrazyScout    | Finding the new VoiceForge link                        |
 
 No members of the original teams are officially working on Offline, even if they have contributed. Some members of the original teams have asked to not be given credit, and they have been removed.
 
@@ -72,6 +73,7 @@ These are unaffiliated people that they haven't directly done anything for the p
 | vocatus            | Some of TronScript's batch code  |
 | ss64.com           | Incredible CMD info resource     |
 | robvanderwoude.com | Also amazing CMD info resource   |
+| VisualPlugin       | Text to speech voices            |
 
 ## Footnotes
 [1] - See <https://www.gnu.org/philosophy/free-sw.html> for a better definition of free software.

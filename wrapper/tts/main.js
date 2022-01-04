@@ -3,6 +3,7 @@ const qs = require("querystring");
 const brotli = require("brotli");
 const https = require("https");
 const md5 = require("js-md5");
+const Lame = require("node-lame").Lame;
 const http = require("http");
 
 // Fallback option for compatibility between Wrapper and https://github.com/Windows81/Text2Speech-Haxxor-JS.
@@ -17,78 +18,72 @@ module.exports = (voiceName, text) => {
 	return new Promise(async (res, rej) => {
 		const voice = voices[voiceName];
 		switch (voice.source) {
-			case "nextup": {
-				https.get("https://nextup.com/ivona/index.html", (r) => {
-					var q = qs.encode({
-						voice: voice.arg,
-						language: `${voice.language}-${voice.country}`,
-						text: text,
-					});
-					var buffers = [];
-					https.get(`https://nextup.com/ivona/php/nextup-polly/CreateSpeech/CreateSpeechGet3.php?${q}`, (r) => {
-						r.on("data", (d) => buffers.push(d));
-						r.on("end", () => {
-							const loc = Buffer.concat(buffers).toString();
-							if (!loc.startsWith("http")) rej();
-							get(loc).then(res).catch(rej);
-						});
-						r.on("error", rej);
-					});
-				});
-				break;
-			}
 			case "polly": {
-				var buffers = [];
+				console.log("polly voice generating...");
+				var charsCount = text.length;
 				var req = https.request(
 					{
-						hostname: "pollyvoices.com",
+						hostname: "voicemaker.in",
 						port: "443",
-						path: "/api/sound/add",
+						path: "/voice/standard",
 						method: "POST",
 						headers: {
-							"Content-Type": "application/x-www-form-urlencoded",
+							"content-type": "application/json",
+							"Cookie": "connect.sid=s%3AINKgxPKyJDALo-LMtoGlo6GPWQLgF9zn.tvjGNWiuxCZbUYVX8%2F6%2BlJZnjAy35aoZGYts1ufMch0; __stripe_mid=b6411c56-4b59-4d3a-b177-e545c9b0813b046b7d; __stripe_sid=e18074e8-49db-48ea-b086-794b2878e9a8fb2a1c",
+							"csrf-token": "",
+							origin: "https://voicemaker.in",
+							referer: "https://voicemaker.in/",
+							"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:95.0) Gecko/20100101 Firefox/95.0",
+							"x-requested-with": "XMLHttpRequest",
 						},
 					},
 					(r) => {
+						var buffers = [];
 						r.on("data", (b) => buffers.push(b));
 						r.on("end", () => {
 							var json = JSON.parse(Buffer.concat(buffers));
-							if (json.file) get(`https://pollyvoices.com${json.file}`).then(res);
-							else rej();
+							console.log(json);
+							if(json.success !== true)
+								rej;
+							get(`https://voicemaker.in/${json.path}`).then((response) => res(response)).catch(rej);
 						});
+						r.on("error", rej);
 					}
 				);
-				req.write(qs.encode({ text: text, voice: voice.arg }));
+				req.write(
+					`{"Engine":"${voice.speech_engine}","Provider":"${voice.ai}","SpeechName":"${voiceName}","OutputFormat":"mp3","VoiceId":"${voice.arg}","LanguageCode":"${voice.language}-${voice.country}","charsCount":${charsCount},"SampleRate":"${voice.samplerate}","effect":"default","master_VC":"advanced","speed":"0","master_volume":"0","pitch":"0","Text":"${text}","TextType":"text","fileName":""}`
+				);
 				req.end();
 				break;
 			}
 			case "cepstral":
 			case "voiceforge": {
-				https.get("https://www.voiceforge.com/demo", (r) => {
-					const cookie = r.headers["set-cookie"];
-					var q = qs.encode({
-						voice: voice.arg,
-						voiceText: text,
-					});
-					var buffers = [];
-					https.get(
-						{
-							host: "www.voiceforge.com",
-							path: `/demos/createAudio.php?${q}`,
-							headers: { Cookie: cookie },
-						},
-						(r) => {
-							r.on("data", (b) => buffers.push(b));
-							r.on("end", () => {
-								const html = Buffer.concat(buffers);
-								const beg = html.indexOf('id="mp3Source" src="') + 20;
-								const end = html.indexOf('"', beg);
-								const loc = html.subarray(beg, end).toString();
-								get(`https://www.voiceforge.com${loc}`).then(res).catch(rej);
-							});
-						}
-					);
+				/* Special thanks to ItsCrazyScout for helping us find the new VoiceForge link! */
+				var q = qs.encode({
+					"HTTP-X-API-KEY": "9a272b4",
+					"voice": voice.arg,
+					"msg": text,
+					"email": "null",
 				});
+				http.get(
+					{
+						host: "api.voiceforge.com",
+						path: `/swift_engine?${q}`,
+					},
+					(r) => {
+						var buffers = [];
+						r.on("data", (d) => buffers.push(d));
+						r.on("end", () => {
+							const encoder = new Lame({ output: "buffer", bitrate: 192, })
+								.setBuffer(Buffer.concat(buffers));
+							encoder.encode()
+								.then(() => {
+									res(encoder.getBuffer());
+								})
+						});
+						r.on("error", rej);
+					}
+				);
 				break;
 			}
 			case "vocalware": {
@@ -125,75 +120,73 @@ module.exports = (voiceName, text) => {
 				);
 				break;
 			}
-			case "voicery": {
-				var q = qs.encode({
-					text: text,
-					speaker: voice.arg,
-					ssml: text.includes("<"),
-					//style: 'default',
-				});
-				https.get(
-					{
-						host: "www.voicery.com",
-						path: `/api/generate?${q}`,
-					},
-					(r) => {
-						var buffers = [];
-						r.on("data", (d) => buffers.push(d));
-						r.on("end", () => res(Buffer.concat(buffers)));
-						r.on("error", rej);
-					}
-				);
-				break;
-			}
-			case "watson": {
-				var q = qs.encode({
-					text: text,
-					voice: voice.arg,
-					download: true,
-					accept: "audio/mp3",
-				});
-				https.get(
-					{
-						host: "text-to-speech-demo.ng.bluemix.net",
-						path: `/api/v1/synthesize?${q}`,
-					},
-					(r) => {
-						var buffers = [];
-						r.on("data", (d) => buffers.push(d));
-						r.on("end", () => res(Buffer.concat(buffers)));
-						r.on("error", rej);
-					}
-				);
-				break;
-			}
 			case "acapela": {
-				var q = qs.encode({
-					cl_login: "VAAS_MKT",
-					req_snd_type: "",
-					req_voice: voice.arg,
-					cl_app: "seriousbusiness",
-					req_text: text,
-					cl_pwd: "M5Awq9xu",
-				});
-				http.get(
+				var buffers = [];
+				var acapelaArray = [];
+				for (var c = 0; c < 15; c++) acapelaArray.push(~~(65 + Math.random() * 26));
+				var email = `${String.fromCharCode.apply(null, acapelaArray)}@gmail.com`;
+				var req = https.request(
 					{
-						host: "vaassl3.acapela-group.com",
-						path: `/Services/AcapelaTV/Synthesizer?${q}`,
+						hostname: "acapelavoices.acapela-group.com",
+						path: "/index/getnonce",
+						method: "POST",
+						headers: {
+							"Content-Type": "application/x-www-form-urlencoded",
+						},
 					},
 					(r) => {
-						var buffers = [];
-						r.on("data", (d) => buffers.push(d));
+						r.on("data", (b) => buffers.push(b));
 						r.on("end", () => {
-							const html = Buffer.concat(buffers);
-							const beg = html.indexOf("&snd_url=") + 9;
-							const end = html.indexOf("&", beg);
-							const sub = html.subarray(beg + 4, end).toString();
-							if (!sub.startsWith("://")) return rej();
-							get(`https${sub}`).then(res).catch(rej);
+							var nonce = JSON.parse(Buffer.concat(buffers)).nonce;
+							var req = http.request(
+								{
+									hostname: "acapela-group.com",
+									port: "8080",
+									path: "/webservices/1-34-01-Mobility/Synthesizer",
+									method: "POST",
+									headers: {
+										"Content-Type": "application/x-www-form-urlencoded",
+									},
+								},
+								(r) => {
+									var buffers = [];
+									r.on("data", (d) => buffers.push(d));
+									r.on("end", () => {
+										const html = Buffer.concat(buffers);
+										const beg = html.indexOf("&snd_url=") + 9;
+										const end = html.indexOf("&", beg);
+										const sub = html.subarray(beg, end).toString();
+										http.get(sub, (r) => {
+											r.on("data", (d) => buffers.push(d));
+											r.on("end", () => {
+												res(Buffer.concat(buffers));
+											});
+										});
+									});
+									r.on("error", rej);
+								}
+							);
+							req.end(
+								qs.encode({
+									req_voice: voice.arg,
+									cl_pwd: "",
+									cl_vers: "1-30",
+									req_echo: "ON",
+									cl_login: "AcapelaGroup",
+									req_comment: `{"nonce":"${nonce}","user":"${email}"}`,
+									req_text: text,
+									cl_env: "ACAPELA_VOICES",
+									prot_vers: 2,
+									cl_app: "AcapelaGroup_WebDemo_Android",
+								})
+							);
 						});
-						r.on("error", rej);
 					}
+				);
+				req.end(
+					qs.encode({
+						json: `{"googleid":"${email}"`,
+					})
 				);
 				break;
 			}
@@ -201,11 +194,13 @@ module.exports = (voiceName, text) => {
 				const req = https.request(
 					{
 						host: "readloud.net",
+						port: 443,
 						path: voice.arg,
 						method: "POST",
-						port: "443",
 						headers: {
 							"Content-Type": "application/x-www-form-urlencoded",
+							"User-Agent":
+								"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.101 Safari/537.36",
 						},
 					},
 					(r) => {
@@ -217,7 +212,23 @@ module.exports = (voiceName, text) => {
 							const end = html.indexOf(".mp3", beg) + 4;
 							const sub = html.subarray(beg, end).toString();
 							const loc = `https://readloud.net${sub}`;
-							get(loc).then(res).catch(rej);
+			
+							https.get(
+								{
+									host: "readloud.net",
+									path: sub,
+									headers: {
+										"Content-Type": "application/x-www-form-urlencoded",
+										"User-Agent":
+											"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.101 Safari/537.36",
+									},
+								},
+								(r) => {
+									buffers = [];
+									r.on("data", (d) => buffers.push(d));
+									r.on("end", () => res(Buffer.concat(buffers)));
+								}
+							);
 						});
 						r.on("error", rej);
 					}
@@ -225,7 +236,10 @@ module.exports = (voiceName, text) => {
 				req.end(
 					qs.encode({
 						but1: text,
-						but: "Enviar",
+						butS: 0,
+						butP: 0,
+						butPauses: 0,
+						but: "Submit",
 					})
 				);
 				break;
@@ -253,7 +267,11 @@ module.exports = (voiceName, text) => {
 							const beg = xml.indexOf("https://cerevoice.s3.amazonaws.com/");
 							const end = xml.indexOf(".mp3", beg) + 4;
 							const loc = xml.substr(beg, end - beg).toString();
-							get(loc).then(res).catch(rej);
+							https.get(loc, (r) => {
+								buffers = [];
+								r.on("data", (d) => buffers.push(d));
+								r.on("end", () => res(Buffer.concat(buffers)));
+							});
 						});
 						r.on("error", rej);
 					}

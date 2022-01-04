@@ -21,10 +21,12 @@ app.use(reqBody.json());
 app.use(reqBody.urlencoded({ extended: true }));
 // HTTP logging
 app.use(morgan("dev"));
-app.use(require("./asset/list"));
 // file uploads
 app.use(fileUpload());
 
+// asset
+app.use(require("./asset/list"));
+app.use(require("./asset/load"));
 // character
 app.use(require("./character/load"));
 app.use(require("./character/premade"));
@@ -42,6 +44,9 @@ app.use(require("./static/page"));
 // theme
 app.use(require("./theme/list"));
 app.use(require("./theme/load"));
+// tts
+app.use(require("./tts/list"));
+app.use(require("./tts/load"));
  // static files
 app.use(express.static("public", { fallthrough: true }));
 // info.json links

@@ -15,6 +15,7 @@ TODO: Put some shit here.
 ### Fixed
   - Starters are now working
   - Movie uploading only takes XML files
+  - Acapela and Readloud voices
 
 ## Version 1.2.3 - 2021-03-06 - i am HUNGRY FOR UPDATES!!!
 ### Added

@@ -1,4 +1,4 @@
-const cachéFolder = __dirname + `/.${process.env.EXAMPLE_FOLDER}`;
+const cachéFolder = __dirname + `/.${process.env.CACHÉ_FOLDER}`;
 const fs = require("fs");
 
 /**
