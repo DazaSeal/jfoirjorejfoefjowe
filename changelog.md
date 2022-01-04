@@ -9,13 +9,16 @@ TODO: Put some shit here.
   - Upgraded Wrapper base to v1.2.7½
   - Preview window in the video maker
   - jQuery for JS stuff
+### Removed
+  - Watson voices. Why? Because after I applied the IBM fix, they took ***way*** too long to load.
 ### Changed
   - Switched to Express for HTTP stuff
   - Replaced VFProxy, VoiceForge should hopefully be running fine
 ### Fixed
   - Starters are now working
-  - Movie uploading only takes XML files
-  - Acapela and Readloud voices
+  - Movie uploading only takes XML files now, no more crashes
+  - Acapela, ReadLoud, and Polly voices
+  - `wrapper/misc/get.js` now uses HTTPS and HTTP
 
 ## Version 1.2.3 - 2021-03-06 - i am HUNGRY FOR UPDATES!!!
 ### Added

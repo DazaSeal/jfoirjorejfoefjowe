@@ -11,18 +11,23 @@ stuff
 **/
 const express = require("express");
 const app = express();
+const stuff = require("./static/info");
+// stuff that makes the app work
 const reqBody = require("body-parser");
 const fileUpload = require("express-fileupload");
 const morgan = require("morgan");
-const stuff = require("./static/info");
+const cookieParser = require("cookie-parser");
 
-
+// post body parser
 app.use(reqBody.json());
 app.use(reqBody.urlencoded({ extended: true }));
 // HTTP logging
 app.use(morgan("dev"));
 // file uploads
 app.use(fileUpload());
+// cookie parsing
+app.use(cookieParser());
+
 
 // asset
 app.use(require("./asset/list"));
