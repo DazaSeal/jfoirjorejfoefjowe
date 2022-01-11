@@ -2,7 +2,7 @@
 :: Author: benson#0411
 :: License: MIT
 set WRAPPER_VER=1.3.0
-title Wrapper: Offline (Express) v%WRAPPER_VER% [Initializing...]
+title Wrapper: Offline v%WRAPPER_VER% [Initializing...]
 
 ::::::::::::::::::::
 :: Initialization ::
@@ -48,7 +48,7 @@ if not exist "utilities\checks" md utilities\checks
 if not exist "utilities\checks\disclaimer.txt" (
 	echo DISCLAIMER
 	echo:
-	echo Wrapper: Offline (Express) is a project to preserve the original GoAnimate flash-based themes.
+	echo Wrapper: Offline is a project to preserve the original GoAnimate flash-based themes.
 	echo We believe they should be archived for others to use and learn about in the future.
 	echo All business themes have been removed, please use Vyond Studio if you wish to get those.
 	echo This is still unlawful use of copyrighted material, but ^(in our opinion^) morally justifiable use.
@@ -82,8 +82,8 @@ if not exist "utilities\checks\disclaimer.txt" (
 )
 
 :: Welcome, Director Ford!
-echo Wrapper: Offline (Express)
-echo A project from VisualPlugin adapted by Octanuary and the W:O(E) team
+echo Wrapper: Offline
+echo A project from VisualPlugin adapted by Octanuary and the W:O team
 echo Version !WRAPPER_VER!
 echo:
 
@@ -481,8 +481,8 @@ if !NODEJS_DETECTED!==n (
 	:nodejs_installed
 	echo Node.js has been installed.
 	set NODEJS_DETECTED=y
+	echo NIG
 	echo:
-	goto install_cert
 )
 :after_nodejs_install
 
@@ -504,9 +504,8 @@ if !LAME_DETECTED!==n (
 	if !DRYRUN!==n ( start /i "utilities\installers\lame_windows.exe" )
 	echo LAME has been installed.
 	set LAME_DETECTED=y
-	set %PATH%="%PATH%!ProgramFiles(x86)!\Lame For Audacity;"
+	set "%PATH%=%PATH%!ProgramFiles(x86)!\Lame For Audacity;"
 	echo:
-	goto install_cert
 )
 :after_lame_install
 
@@ -599,8 +598,8 @@ cls
 :wrapperstarted
 
 echo:
-echo Wrapper: Offline (Express) v!WRAPPER_VER! running
-echo A project from VisualPlugin adapted by Octanuary and the W:O(E) team
+echo Wrapper: Offline v!WRAPPER_VER! running
+echo A project from VisualPlugin adapted by Octanuary and the W:O team
 echo:
 if !VERBOSEWRAPPER!==n ( echo DON'T CLOSE THIS WINDOW^^! Use the quit option ^(0^) when you're done. )
 if !VERBOSEWRAPPER!==y ( echo Verbose mode is on, see the two extra CMD windows for extra output. )
