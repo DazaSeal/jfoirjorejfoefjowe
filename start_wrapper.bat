@@ -202,6 +202,7 @@ IF "!output!" EQU "" (
 :: LAME
 if !VERBOSEWRAPPER!==y ( echo Checking for LAME installation... )
 if exist "!ProgramFiles(x86)!\Lame For Audacity\lame.exe" set LAME_DETECTED=y
+if exist "!ProgramFiles!\Lame For Audacity\lame.exe" set LAME_DETECTED=y
 if !LAME_DETECTED!==n (
 	echo LAME could not be found.
 	echo:
