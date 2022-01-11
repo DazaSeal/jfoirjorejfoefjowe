@@ -19,8 +19,8 @@ const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 
 // post body parser
-app.use(reqBody.json());
-app.use(reqBody.urlencoded({ extended: true }));
+app.use(reqBody.json({ limit:"50mb" }));
+app.use(reqBody.urlencoded({ extended:true, limit:"50mb" }));
 // HTTP logging
 app.use(morgan("dev"));
 // file uploads

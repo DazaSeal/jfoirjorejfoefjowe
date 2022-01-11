@@ -130,6 +130,7 @@ set FLASH_DETECTED=n
 set FLASH_CHROMIUM_DETECTED=n
 set FLASH_FIREFOX_DETECTED=n
 set NODEJS_DETECTED=n
+set LAME_DETECTED=n
 if !INCLUDEDCHROMIUM!==y set BROWSER_TYPE=chrome
 
 :: Flash Player
@@ -198,6 +199,21 @@ IF "!output!" EQU "" (
 )
 :nodejs_checked
 
+:: LAME
+if !VERBOSEWRAPPER!==y ( echo Checking for LAME installation... )
+if exist "!ProgramFiles(x86)!\Lame For Audacity\lame.exe" set LAME_DETECTED=y
+if !LAME_DETECTED!==n (
+	echo LAME could not be found.
+	echo:
+	set NEEDTHEDEPENDERS=y
+	set ADMINREQUIRED=y
+) else (
+	echo LAME is installed.
+	echo:
+	set FLASH_DETECTED=y
+)
+:lame_checked
+
 :: Assumes nothing is installed during a dry run
 if !DRYRUN!==y (
 	echo Let's just ignore anything we just saw above.
@@ -208,6 +224,7 @@ if !DRYRUN!==y (
 	set FLASH_CHROMIUM_DETECTED=n
 	set FLASH_FIREFOX_DETECTED=n
 	set NODEJS_DETECTED=n
+	set LAME_DETECTED=n
 	set BROWSER_TYPE=n
 )
 
@@ -221,8 +238,8 @@ if !NEEDTHEDEPENDERS!==y (
 		echo Installing missing dependencies...
 		echo:
 	) else (
-	echo Skipping dependency install.
-	goto skip_dependency_install
+		echo Skipping dependency install.
+		goto skip_dependency_install
 	)
 ) else (
 	echo All dependencies are available.
@@ -467,6 +484,30 @@ if !NODEJS_DETECTED!==n (
 	goto install_cert
 )
 :after_nodejs_install
+
+:: LAME
+if !LAME_DETECTED!==n (
+	echo Installing LAME...
+	echo:
+	:: Install LAME
+	if not exist "utilities\installers\lame_windows.exe" (
+		echo We have a problem. The LAME installer doesn't exist.
+		echo A normal copy of W:O Express should come with one.
+		echo You should be able to download a copy with this link:
+		echo https://lame.buanzo.org/Lame_v3.99.3_for_Windows.exe
+		pause
+		goto after_lame_install
+	)
+	echo Proper LAME installation doesn't seem possible to do automatically.
+	echo You can just keep clicking next until it finishes, and Wrapper: Offline will continue once it closes.
+	if !DRYRUN!==n ( start /i "utilities\installers\lame_windows.exe" )
+	echo LAME has been installed.
+	set LAME_DETECTED=y
+	set %PATH%="%PATH%!ProgramFiles(x86)!\Lame For Audacity;"
+	echo:
+	goto install_cert
+)
+:after_lame_install
 
 :: Alert user to restart Wrapper without running as Admin
 if !ADMINREQUIRED!==y (

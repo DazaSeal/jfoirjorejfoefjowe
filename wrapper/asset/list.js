@@ -77,11 +77,6 @@ async function listAssets(data, makeZip) {
 					fUtil.addToZip(zip, `${file.mode}/${file.id}`, buffer);
 					break;
 				}
-				case "sound": {
-					const buffer = asset.load(data.movieId, file.id);
-					fUtil.addToZip(zip, `${file.mode}/${file.id}`, buffer);
-					break;
-				}
 				case "effect":
 				case "prop": {
 					const buffer = asset.load(data.movieId, file.id);

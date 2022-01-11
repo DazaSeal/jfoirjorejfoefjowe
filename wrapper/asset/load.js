@@ -32,12 +32,9 @@ router.post("/goapi/getAsset/", (req, res) => {
 	const b = asset.load(movieId, aId);
 	if (b) {
 		res.setHeader("Content-Length", b.length);
-		res.setHeader("Content-Type", "audio/mp3");
 		res.end(b);
-	} else {
-		res.statusCode = 404;
-		res.end();
-	}		
+	} else
+		res.status(404).end();		
 });
 
 module.exports = router;

@@ -9,7 +9,7 @@ module.exports = {
 	 * @param {number} l
 	 * @returns {string}
 	 */
-	padZero(n, l = process.env.FILE_NUM_WIDTH) {
+	padZero(n, l = 7) {
 		return ("" + n).padStart(l, "0");
 	},
 	/**

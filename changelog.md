@@ -10,7 +10,7 @@ TODO: Put some shit here.
   - Preview window in the video maker
   - jQuery for JS stuff
 ### Removed
-  - Watson voices. Why? Because after I applied the IBM fix, they took ***way*** too long to load.
+  - Watson voices. Why? Because after I applied the IBM fix, they took **way** too long to load.
 ### Changed
   - Switched to Express for HTTP stuff
   - Replaced VFProxy, VoiceForge should hopefully be running fine
