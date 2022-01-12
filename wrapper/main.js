@@ -1,5 +1,5 @@
 /***
-this file starts wrapper: offline
+this file starts wrapper: infinite
 ***/
 
 // env and config.json
@@ -18,14 +18,14 @@ const fileUpload = require("express-fileupload");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 
-// post body parser
+/**
+makes stuff work
+**/
+// this is stupid
 app.use(reqBody.json({ limit:"50mb" }));
 app.use(reqBody.urlencoded({ extended:true, limit:"50mb" }));
-// HTTP logging
 app.use(morgan("dev"));
-// file uploads
 app.use(fileUpload());
-// cookie parsing
 app.use(cookieParser());
 
 
@@ -74,5 +74,5 @@ app.all("*", (req, res) => {
 
 // start offline
 app.listen(4343, () => {
-  console.log("Wrapper: Offline has started!")
+  console.log("Wrapper: Infinite has started!")
 })
