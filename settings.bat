@@ -97,21 +97,9 @@ if exist "wrapper\static\info-nowave.json" (
 ) else ( 
 	echo ^(5^) Waveforms are[91m OFF [0m
 )
-:: Truncated Themelist
-if exist "wrapper\_THEMES\themelist-allthemes.xml" (
-	echo ^(6^) Truncated themelist is[92m ON [0m
-) else ( 
-	echo ^(6^) Truncated themelist is[91m OFF [0m
-)
-:: Discord RPC
-if exist "wrapper\main-norpc.js" (
-	echo ^(7^) Discord rich prescence is[92m ON [0m
-) else ( 
-	echo ^(7^) Discord rich prescence is[91m OFF [0m
-)
 :: Character solid archive
 if exist "server\characters\characters.zip" (
-	echo ^(8^) Original LVM Character IDs are[91m OFF [0m
+	echo ^(6^) Original LVM Character IDs are[91m OFF [0m
 )
 :: Dev options
 :: These are really specific options that no casual user would ever really need
@@ -218,32 +206,10 @@ if "!choice!"=="?5" (
 	echo Turning this off will simply add a repeating pre-made pattern in place of true waveforms.
 	goto reaskoptionscreen
 )
-:: Waveforms
-if "!choice!"=="6" goto allthemechange
-if "!choice!"=="?6" (
-	echo Cuts down the amount of themes that clog up the themelist in the videomaker.
-	echo Keeping this off is highly suggested.
-	echo However, if you want to see everything the program has to offer, turn this on.
-	goto reaskoptionscreen
-)
-:: Rich prescence
-if "!choice!"=="7" goto rpcchange
-if "!choice!"=="?7" (
-	echo By default, Discord rich presence is enabled.
-        echo:
-	echo It's used to show when you're using Wrapper: Offline
-        echo in your "Playing A Game" status on Discord, much like
-        echo how lots of modern computer games will show on your
-        echo Discord status when you're playing them.
-        echo:
-	echo Turning this off will make Offline stop saying
-        echo when you're using it on Discord.
-	goto reaskoptionscreen
-)
 :: Character solid archive
 if exist "server\characters\characters.zip" (
-	if "!choice!"=="8" goto extractchars
-	if "!choice!"=="?8" (
+	if "!choice!"=="6" goto extractchars
+	if "!choice!"=="?6" (
 		echo When first getting Wrapper: Offline, all non-stock characters are put into a single zip file.
 		echo This is because if they're all separate, extracting takes forever and is incredibly annoying.
 		echo If you wish to import characters made on the LVM when it was still up and hosted by Vyond,
@@ -457,94 +423,6 @@ if exist "info-nowave.json" (
 	ren info-wave.json info.json
 )
 popd
-goto optionscreen
-
-:::::::::::::::::::::::::
-:: Truncated Themelist ::
-:::::::::::::::::::::::::
-:allthemechange
-echo Toggling setting...
-pushd wrapper\_THEMES
-if exist "themelist-allthemes.xml" (
-	:: disable
-	ren themelist.xml themelist-lessthemes.xml
-	ren themelist-allthemes.xml themelist.xml
-) else ( 
-	:: enable
-	ren themelist.xml themelist-allthemes.xml
-	ren themelist-lessthemes.xml themelist.xml
-)
-popd
-goto optionscreen
-
-::::::::::::::::::
-:: Discord RPC  ::
-::::::::::::::::::
-:rpcchange
-echo Toggling setting...
-pushd wrapper
-if exist "main-norpc.js" (
-	:: disable
-	ren main.js main-rpc.js
-	ren main-norpc.js main.js
-) else ( 
-	:: enable
-	ren main.js main-norpc.js
-	ren main-rpc.js main.js
-)
-popd
-goto optionscreen
-
-:::::::::::::::
-:: Cepstral  ::
-:::::::::::::::
-:cepstralchange
-echo Toggling setting...
-pushd wrapper\tts
-if exist "info-cepstral.json" (
-	:: disable
-	ren info.json info-vfproxy.json
-	ren info-cepstral.json info.json
-) else ( 
-	:: enable
-	ren info.json info-cepstral.json
-	ren info-vfproxy.json info.json
-)
-popd
-set TOTOGGLE=CEPSTRAL
-if !CEPSTRAL!==n (
-	set TOGGLETO=y
-) else (
-	set TOGGLETO=n
-)
-set CFGLINE=35
-goto toggleoption
-goto optionscreen
-
-:::::::::::::::
-:: Cepstral  ::
-:::::::::::::::
-:vfproxyserverchange
-echo Toggling setting...
-pushd wrapper\tts
-if exist "load-seamus.js" (
-	:: disable
-	ren load.js load-localvfproxy.js
-	ren load-seamus.js load.js
-) else ( 
-	:: enable
-	ren load.js load-seamus.js
-	ren load-localvfproxy.js load.js
-)
-popd
-set TOTOGGLE=CEPSTRAL
-if !CEPSTRAL!==n (
-	set TOGGLETO=y
-) else (
-	set TOGGLETO=n
-)
-set CFGLINE=35
-goto toggleoption
 goto optionscreen
 
 ::::::::::::::::::::::::
