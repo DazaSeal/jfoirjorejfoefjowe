@@ -4,13 +4,13 @@ This changelog is based off [Keep a Changelog](https://keepachangelog.com) and ~
 
 ## Version 1.3.0 - 2022-00-00 - let's just forget about 2021
 ### What do I care about
-TODO: Put some shit here.
+The Wrapper base has been upgraded to v1.2.7½. Horray! Some important features have been added, including IMPORTING! Double hooray! Wrapper now uses the Express module. I don't know if it makes anything faster, but it does make modding easier. Numerous text-to-speech services have been fixed.
 ### Added
   - Upgraded Wrapper base to v1.2.7½
   - Preview window in the video maker
   - jQuery for JS stuff
 ### Removed
-  - Watson voices. Why? Because after I applied the IBM fix, they took **way** too long to load.
+  - Watson voices. Why? Because after I created a fix for them, they took **way** too long to load.
 ### Changed
   - Switched to Express for HTTP stuff
   - Replaced VFProxy, VoiceForge should hopefully be running fine
