@@ -1,6 +1,6 @@
 {
 	"Server Thingy": {
-		"scope": "javascript,typescript",
+		"scope": "javascript",
 		"prefix": "xxx",
 		"body": [
 			"module.exports = function (req, res, url) {",

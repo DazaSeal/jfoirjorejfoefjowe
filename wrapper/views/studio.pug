@@ -1,0 +1,79 @@
+html
+	head 
+		title Video Editor
+		link(rel="stylesheet", type="text/css", href="../pages/css/global.css")
+		link(rel="stylesheet", type="text/css", href="../pages/css/flash.css")
+		script(src="../pages/js/jquery.js")
+	body(style="margin:0px")
+		//- asset importer
+		nav#importer
+			nav#import_head
+				h3#import-media Import Media
+				h3.close-button(onclick="hideImporter()") ✖
+			form
+				input#importer-files(type="file", name="file", title="Upload Files")
+			#importer-queue
+			script(src="/pages/js/importer.js")
+		//- the studio itself
+		main
+			object#studio(data="../static/animation/go_full.swf", type="application/x-shockwave-flash")
+				param(name="flashvars", value=flashvars)
+				param(name="allowScriptAccess", value="always")
+				h1 Flash Player is not installed.
+		//- video previewer
+		#preview_popup.popup_container(style="display:none")
+			nav.popup
+				nav.popup_head
+					h2#preview-video Preview Video
+					h2.close-button(onclick="hidePreviewer()") ✖
+				object#preview_player(data="../static/animation/player.swf", type="application/x-shockwave-flash", width="640", height="360")
+					param(name="flashvars", value="apiserver=/&isEmbed=1&tlang=en_US&isInitFromExternal=1&startFrame=previewStartFrame&autostart=1&storePath=../static/store/<store>&clientThemePath=../static/<client_theme>")
+					param(name="allowScriptAccess", value="always")
+					param(name="allowFullScreen", value="true")
+		script.
+			interactiveTutorial = {
+				neverDisplay:function() {
+					return true
+				}
+			};
+			function studioLoaded(arg) { console.log(arg) }
+			function exitStudio() { window.location = '/' }
+
+			function initPreviewPlayer(dataXmlStr, startFrame, containsChapter, themeList) {
+				movieDataXmlStr = dataXmlStr;
+				filmXmlStr = dataXmlStr.split("<filmxml>")[1].split("</filmxml>")[0];
+				$("#preview_popup").css("display", "block");
+			}
+			function hidePreviewer() { $("#preview_popup").css("display", "none") }
+			function retrievePreviewPlayerData() { return movieDataXmlStr }
+
+			const fu = document.getElementById('fileupload'),
+				sub = document.getElementById('submit');
+			function importComplete(obj) {
+				const file = obj.files[0];
+				if(file != undefined) {
+					const ext = file.name.substring(file.name.lastIndexOf('.')+1);
+					var params = flashvars.presaveId + '.';
+					if(ext == 'mp3' || ext == 'wav') {
+						var c;
+						while(c!='vo'&&c!='se'&&c!='mu') {
+							c = prompt('Would you like to upload this as a voiceover (\"vo\"), sound effect (\"se\"), or as music (\"mu\")?').toLowerCase()
+						}
+						params+=c
+					} else if(ext == 'jpg' || ext == 'png') {
+						var c;
+						while(c!='bg'&&c!='prop') {
+							c = prompt('Would you like to upload this as a background (\"bg\") or as a prop (\"prop\")?').toLowerCase()
+						}
+						params+=c
+					}
+					obj.parentElement.firstChild.value=params+'.'+ext;
+					sub.click();
+					return true
+				}
+			}
+			//Prevent unwanted closing
+			window.onbeforeunload = function() {
+				const response = confirm("Are you sure you want to exit the studio? Make sure your work is saved.")
+				return (response) ? true : false
+			};

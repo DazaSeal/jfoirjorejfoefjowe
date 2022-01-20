@@ -1,0 +1,71 @@
+<film copyable="0" duration="2.5" published="0" pshare="0" isWide="1">
+  <meta>
+    <title><![CDATA[bich]]></title>
+    <tag><![CDATA[]]></tag>
+    <hiddenTag><![CDATA[]]></hiddenTag>
+    <desc><![CDATA[]]></desc>
+    <mver><![CDATA[4]]></mver>
+    <studio>d7446f28669693f5b7a35d41831e43c3662c48bf</studio>
+    <thumbnail index="0"/>
+    <palette>
+      <color value="333333"/>
+      <color value="999999"/>
+      <color value="fbfbfb"/>
+      <color value="669999"/>
+      <color value="55bbaa"/>
+      <color value="7fbb11"/>
+      <color value="15709b"/>
+      <color value="9a5d1"/>
+      <color value="6ab8d6"/>
+      <color value="da2021"/>
+      <color value="fecd31"/>
+      <color value="28c6c1"/>
+      <color value="37444f"/>
+    </palette>
+  </meta>
+  <scene id="SCENE0" adelay="60" lock="N" index="0" color="16777215" guid="CD2ACFE2-202E-01C1-1716-6F03C8545A00" combgId="custom.cbg_office_pentry">
+    <durationSetting countMinimum="1" countTransition="1" countAction="1" countBubble="1" countSpeech="1"/>
+    <bg id="cbg_office_pentry_BG102" index="0">
+      <file>custom.office_pentry_bg.swf</file>
+    </bg>
+    <prop id="PROP13" index="1">
+      <file>custom.cc_coffin.swf</file>
+      <x>456.45</x>
+      <y>218.125</y>
+      <xscale>1</xscale>
+      <yscale>1</yscale>
+      <face>1</face>
+      <rotation>0</rotation>
+    </prop>
+    <prop id="PROP14" index="2">
+      <file>custom.kitchen_cup.swf</file>
+      <x>167.15</x>
+      <y>201.0141285</y>
+      <xscale>1</xscale>
+      <yscale>1</yscale>
+      <face>-1</face>
+      <rotation>21.4459816</rotation>
+    </prop>
+    <effectAsset id="EFFECT0" themecode="common" index="3">
+      <effect x="0" y="0" w="550" h="310" rotate="0" id="cut" type="ZOOM" isCut="true" isPan="false"/>
+      <x>47</x>
+      <y>24</y>
+      <width>550</width>
+      <height>354</height>
+      <speech>0</speech>
+    </effectAsset>
+  </scene>
+  <sound id="SOUND9" index="0" track="0" vol="1" tts="1">
+    <sfile>ugc.b0fd05b51.mp3</sfile>
+    <start>1</start>
+    <stop>24</stop>
+    <fadein duration="0" vol="0"/>
+    <fadeout duration="0" vol="0"/>
+    <ttsdata>
+      <type><![CDATA[tts]]></type>
+      <text><![CDATA[i will kill you]]></text>
+      <voice><![CDATA[brian]]></voice>
+    </ttsdata>
+  </sound>
+  <linkage>SOUND9,SCENE0~~~</linkage>
+</film>

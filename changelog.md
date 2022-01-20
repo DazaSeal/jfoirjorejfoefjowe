@@ -2,24 +2,30 @@
 # Wrapper: Infinite Changelog
 This changelog is based off [Keep a Changelog](https://keepachangelog.com) and ~~somewhat but not really~~ adheres to [Semantic Versioning](https://semver.org/). If you have no idea what that means, basically this changelog is formatted in a specific consistent way, and version numbers are formatted as X.Y.Z, X being a major not-backwards-compatible update, Y being a feature update, and X being bug fixes.
 
-## Version 1.3.0 - 2022-00-00 - Infinite Possibilities
+## Version 2.0.0 - 2022-00-00 - Infinite Possibilities
 ### What do I care about
-The Wrapper base has been upgraded to v1.2.7½. Horray! Some important features have been added, including IMPORTING! Double hooray! Wrapper now uses the Express module. I don't know if it makes anything faster, but it does make modding easier. Numerous text-to-speech services have been fixed.
+The Wrapper base has been upgraded to v1.2.7½ and rewritten... kinda. Horray! Some important features have been added, including IMPORTING! Double hooray! Wrapper now uses the Express module. I don't know if it makes anything faster, but it does make modding easier. Numerous text-to-speech services have been fixed.
 ### Added
-  - Upgraded Wrapper base to v1.2.7½
-  - Preview window in the video maker
+  - Preview window in the studio
   - jQuery for JS stuff
   - Launcher now checks for a LAME installation
+  - Settings page inside of Wrapper (i'll list the new options below)
+    - Dark mode
+  - Compression
+  - Comfirmation before closing the studio
+  - File importing
 ### Removed
-  - Watson voices. Why? Because after I created a fix for them, they took **way** too long to load.
+  - Watson voices
 ### Changed
-  - Switched to Express for HTTP stuff
+  - Video list mostly redone (part 2)
+  - Wrapper API mostly redone
+  - Node.js installer is now 16.13.2
+  - Switched to the pollyvoices.com API for Polly voices
   - Replaced VFProxy, VoiceForge should hopefully be running fine
 ### Fixed
   - Starters are now working
-  - Movie uploading only takes XML files now, no more crashes
-  - Acapela, ReadLoud, and Polly voices
-  - `wrapper/misc/get.js` now uses HTTPS and HTTP
+  - Movie uploading only takes XML files now
+  - Acapela and ReadLoud (credit to VisualPlugin)
 
 ## Version 1.2.3 - 2021-03-06 - i am HUNGRY FOR UPDATES!!!
 ### Added

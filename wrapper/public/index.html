@@ -19,13 +19,7 @@
 <header>
 	<a href="/"><h1 style="margin:0"><img id="logo" src="./pages/img/logo.svg" alt="Wrapper: Infinite" /></h1></a>
 	<nav id="headbuttons">
-		<div class="dropdown_contain button_small">
-			<div class="dropdown_button upload_button">UPLOAD</div>
-			<nav class="dropdown_menu">
-				<a onclick="document.getElementById('file').click()">Movie</a>
-				<a onclick="document.getElementById('file2').click()">Character</a>
-			</nav>
-		</div>
+		<a onclick="document.getElementById('file2').click()" class="button_small">UPLOAD A CHARACTER</a>
 		<div class="dropdown_contain button_small">
 			<div class="dropdown_button">CREATE A CHARACTER</div>
 			<nav class="dropdown_menu">
@@ -70,7 +64,7 @@
 				<a href="/cc_browser?themeId=spacecitizen">Space Citizens</a>
 			</nav>
 		</div>
-		<a href="/go_full" class="button_big">MAKE A MOVIE</a>
+		<a href="/app/studio" class="button_big">MAKE A MOVIE</a>
 	</nav>
 </header>
 
@@ -105,11 +99,11 @@
 	</nav>
 </footer>
 
-<form enctype='multipart/form-data' action='/api/uploadMovie' method='post'>
+<form enctype='multipart/form-data' action='/api/movie/upload' method='post'>
 	<input id='file' type="file" onchange="this.form.submit()" name='import' />
 </form>
 
-<form enctype='multipart/form-data' action='/api/uploadCharacter' method='post'>
+<form enctype='multipart/form-data' action='/api/character/upload' method='post'>
 	<input id='file2' type="file" onchange="this.form.submit()" name='import' />
 </form>
 
@@ -135,9 +129,17 @@
 			tbody.innerHTML += '<tr id="' + tbl.id + '"><td><img src="/movie_thumbs/' + tbl.id + '.png"></td><td><div>' + tbl.title.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") + '</div><div>(#' + id + ') ' + tbl.durationString + '</div></div></div></td><td><span>' + date + '</span></td><td><a href="javascript:;" onclick="popup(\'' + tbl.id + '\')"></a><a href="/go_full?movieId=' + tbl.id + '"></a><a href="/movies/' + tbl.id + '.xml" download="' + tbl.title + '"></a><a href="javascript:;" onclick="deleteMovie(\'' + tbl.id + '\')"></a></td></tr>';
 		}
 	}
+	function noMovies(text = "You have not created any movies.") {
+		tbody.remove();
+		$("main").append(`<p style="text-align:center">${text}</p>`)
+	}
 
-	fetch('/api/getMovieList/').then((response) => {
-		response.json().then((data) => loadRows(data));
+	fetch('/ajax/movie/list').then((response) => {
+		response.json().then(data => {
+			if (Object.keys(item).length !== 0) loadRows(data);
+			else noMovies();
+
+		})
 	});
 
 	function popup(id) {

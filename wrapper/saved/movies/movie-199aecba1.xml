@@ -1,0 +1,85 @@
+<film copyable="0" duration="2.5" published="0" pshare="0" isWide="1">
+  <meta>
+    <title><![CDATA[infinite possibilities]]></title>
+    <tag><![CDATA[]]></tag>
+    <hiddenTag><![CDATA[]]></hiddenTag>
+    <desc><![CDATA[]]></desc>
+    <mver><![CDATA[4]]></mver>
+    <studio>d7446f28669693f5b7a35d41831e43c3662c48bf</studio>
+    <thumbnail index="0"/>
+    <palette>
+      <color value="333333"/>
+      <color value="999999"/>
+      <color value="fbfbfb"/>
+      <color value="669999"/>
+      <color value="55bbaa"/>
+      <color value="7fbb11"/>
+      <color value="15709b"/>
+      <color value="9a5d1"/>
+      <color value="6ab8d6"/>
+      <color value="da2021"/>
+      <color value="fecd31"/>
+      <color value="28c6c1"/>
+      <color value="37444f"/>
+    </palette>
+  </meta>
+  <scene id="SCENE0" adelay="60" lock="N" index="0" color="16777215" guid="4C1D12B7-044B-3B91-749E-868318F40F2A" combgId="custom.cbg_airport_security">
+    <durationSetting countMinimum="1" countTransition="1" countAction="1" countBubble="1" countSpeech="1"/>
+    <bg id="cbg_airport_security_BG2" index="0">
+      <file>custom.airport_security_bg.swf</file>
+    </bg>
+    <prop id="cbg_airport_security_PROP2" index="4" attached="Y">
+      <file>custom.airport_security_door_02.swf</file>
+      <x>118</x>
+      <y>203.3</y>
+      <xscale>1</xscale>
+      <yscale>1</yscale>
+      <face>1</face>
+      <rotation>0</rotation>
+    </prop>
+    <prop id="cbg_airport_security_PROP1" index="3" attached="Y">
+      <file>custom.msp_airport_door.msp_airport_door_airport_security_door_off.swf</file>
+      <x>184.9</x>
+      <y>183</y>
+      <xscale>1</xscale>
+      <yscale>1</yscale>
+      <face>1</face>
+      <rotation>0</rotation>
+    </prop>
+    <prop id="cbg_airport_security_PROP3" index="2" attached="Y">
+      <file>custom.airport_security_cover.swf</file>
+      <x>267.6</x>
+      <y>194.7</y>
+      <xscale>0.87</xscale>
+      <yscale>0.87</yscale>
+      <face>1</face>
+      <rotation>0</rotation>
+    </prop>
+    <prop id="cbg_airport_security_PROP0" index="1" attached="Y">
+      <file>custom.airport_security_machine.swf</file>
+      <x>278.6</x>
+      <y>241</y>
+      <xscale>1</xscale>
+      <yscale>1</yscale>
+      <face>1</face>
+      <rotation>0</rotation>
+    </prop>
+    <prop id="PROP7" index="5">
+      <file>custom.cc_flying_ufo.swf</file>
+      <x>350.2</x>
+      <y>255.15</y>
+      <xscale>1</xscale>
+      <yscale>1</yscale>
+      <face>1</face>
+      <rotation>0</rotation>
+    </prop>
+    <effectAsset id="EFFECT0" themecode="common" index="6">
+      <effect x="0" y="0" w="550" h="310" rotate="0" id="cut" type="ZOOM" isCut="true" isPan="false"/>
+      <x>47</x>
+      <y>24</y>
+      <width>550</width>
+      <height>354</height>
+      <speech>0</speech>
+    </effectAsset>
+  </scene>
+</film>
