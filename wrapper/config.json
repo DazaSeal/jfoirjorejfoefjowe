@@ -1,8 +1,8 @@
 {
 	"CHAR_BASE_URL": "http://localhost:4343/characters",
 	"THUMB_BASE_URL": "http://localhost:4343/thumbnails",
-	"STORE_PATH": "../public/static/store",
-	"CLIENT_URL": "../public/static",
+	"store_path": "../static/static/store",
+	"CLIENT_URL": "../static/static",
 	"XML_HEADER": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n",
 	"CROSSDOMAIN": "<cross-domain-policy><allow-access-from domain=\"*\"/></cross-domain-policy>",
 	"FILE_WIDTH": 1000,
@@ -11,10 +11,10 @@
 	"GATHER_THRESH2": 328493000,
 	"GATHER_THRESH3": 400000000,
 	"XML_NUM_WIDTH": 3,
-	"PORT": 4343,
+	"port": 4343,
 	"SAVED_FOLDER": "../saved/movies",
 	"ASSET_FOLDER": "../saved/assets",
 	"EXAMPLE_FOLDER": "./_EXAMPLES",
-	"WRAPPER_VER": "2.0.0",
+	"wrapper_ver": "2.0.0",
 	"NODE_TLS_REJECT_UNAUTHORIZED": 0
 }

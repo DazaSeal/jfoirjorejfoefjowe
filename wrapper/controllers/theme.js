@@ -1,30 +1,47 @@
-const express = require("express"),
-	router = express.Router(),
-	fUtil = require("../helpers/file");
+const express = require("express");
+const router = express.Router();
+const JSZip = require("jszip");
 
-//Zips the themelist
 router.post("/getThemelist/", (req, res) => {
-	const short = req.cookies.shortthemelist == 1
-	//short themelist option
-	let themelist = (short) ? `${__dirname}/${process.env.STORE_PATH}/_short-themelist.xml` : `${__dirname}/${process.env.STORE_PATH}/_themelist.xml`
-	res.set("Content-Type", "application/zip")
-	fUtil.makeZip(themelist, "themelist.xml")
-		.then(zip => res.end(zip))
-		.catch(err => { //idk how this would happen
-			console.error("Themelist doesn't exist? " + err)
-			return false
-		})
-})
+	// short themelist option
+	const short = req.cookies.shortthemelist == 1;
 
-//Zips the requested theme
+	try {
+		var xml = fs.readFileSync((short) ? `${__dirname}/${process.env.store_path}/_short-themelist.xml` : `${__dirname}/${process.env.store_path}/_themelist.xml`);
+	} catch(err) { // themelist doesn't exist
+		console.error("Themelist doesn't exist? You may be missing the wrapper/static folder.");
+		res.status(500).json({ status: "forbidden", message: "Themelist doesn't exist." });
+	}
+	const zip = new JSZip();
+	// add themelist to zip
+	zip.file("themelist.xml", xml);
+
+	res.set("Content-Type", "application/zip")
+	// generate a zip file
+	zip.generateNodeStream({ type: "nodebuffer", streamFiles: true })
+		.pipe(res)
+		.on("finish", () => res.end());
+});
+
 router.post("/getTheme/", (req, res) => {
-	res.set("Content-Type", "application/zip")
-	fUtil.makeZip(`${__dirname}/${process.env.STORE_PATH}/${req.body.themeId}/theme.xml`, "theme.xml")
-		.then(zip => res.end(zip))
-		.catch(err => {
-			console.error("Theme doesn't exist. " + err)
-			return false
-		})
-})
+	// check if there's no theme specified
+	if (!req.body.themeId) req.status(400).json({ status: "forbidden", message: "Theme not specified." });
 
-module.exports = router
+	try {
+		var xml = fs.readFileSync(`${__dirname}/${process.env.store_path}/${themeId}/theme.xml`);
+	} catch(err) { // theme doesn't exist
+		console.error("Theme doesn't exist.");
+		res.status(404).json({ status: "forbidden", message: "Theme doesn't exist." });
+	}
+	const zip = new JSZip();
+	// add themelist to zip
+	zip.file("theme.xml", xml);
+
+	res.set("Content-Type", "application/zip")
+	// generate a zip file
+	zip.generateNodeStream({ type: "nodebuffer", streamFiles: true })
+		.pipe(res)
+		.on("finish", () => res.end());
+});
+
+module.exports = router;
