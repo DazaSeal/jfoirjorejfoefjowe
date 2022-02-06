@@ -2,12 +2,15 @@
 wrapper/_CACHÉ/*
 wrapper/_SAVED/*
 !_*/_NO_REMÖVE
+utilities/settings.pickle
 utilities/config.bat
 utilities/checks/disclaimer.txt
-wrapper/public/store/3a981f5cb2739137/business/*
-wrapper/public/store/3a981f5cb2739137/whiteboard/*
-wrapper/public/store/3a981f5cb2739137/infographics/*
-wrapper/public/store/3a981f5cb2739137/commoncraft/*
+wrapper/static/static/store/bizmodels/*
+wrapper/static/static/store/business/*
+wrapper/static/static/store/commoncraft/*
+wrapper/static/static/store/infographics/*
+wrapper/static/static/store/sticklybiz/*
+wrapper/static/static/store/whiteboard/*
 .DS_Store
 .DS_Store
 

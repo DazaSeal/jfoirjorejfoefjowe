@@ -85,7 +85,7 @@ if !INCLUDEDCHROMIUM!==n (
 	)
 )
 :postbrowsershow
-:: Skip checking dependenceis
+:: Skip checking dependencies
 if !SKIPCHECKDEPENDS!==n (
 	echo ^(4^) Checking dependencies is[92m ON [0m
 ) else ( 
