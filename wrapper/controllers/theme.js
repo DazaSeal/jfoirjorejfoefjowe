@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const fs = require("fs");
 const JSZip = require("jszip");
 
 router.post("/getThemelist/", (req, res) => {
@@ -11,6 +12,7 @@ router.post("/getThemelist/", (req, res) => {
 	} catch(err) { // themelist doesn't exist
 		console.error("Themelist doesn't exist? You may be missing the wrapper/static folder.");
 		res.status(500).json({ status: "forbidden", message: "Themelist doesn't exist." });
+		res.end();
 	}
 	const zip = new JSZip();
 	// add themelist to zip
@@ -28,10 +30,11 @@ router.post("/getTheme/", (req, res) => {
 	if (!req.body.themeId) req.status(400).json({ status: "forbidden", message: "Theme not specified." });
 
 	try {
-		var xml = fs.readFileSync(`${__dirname}/${process.env.store_path}/${themeId}/theme.xml`);
+		var xml = fs.readFileSync(`${__dirname}/${process.env.store_path}/${req.body.themeId}/theme.xml`);
 	} catch(err) { // theme doesn't exist
 		console.error("Theme doesn't exist.");
 		res.status(404).json({ status: "forbidden", message: "Theme doesn't exist." });
+		res.end();
 	}
 	const zip = new JSZip();
 	// add themelist to zip
